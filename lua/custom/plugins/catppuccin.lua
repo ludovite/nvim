@@ -30,6 +30,7 @@ return {
         scope_color = 'teal', -- catppuccin color (eg. `lavender`) Default: text
         colored_indent_levels = true,
       },
+      rainbow_delimiters = true,
     },
   },
   init = function()
