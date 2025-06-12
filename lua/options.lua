@@ -3,17 +3,109 @@
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Make line numbers default
-vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+local options = {
+  -- [[ System ]]
 
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+  -- Don’t want backup nor swap files
+  backup = false,
+  swapfile = false,
+  -- Save undo history
+  undofile = true,
+  -- The encoding written to a file
+  fileencoding = 'utf-8',
+  -- Enable mouse mode, can be useful for resizing splits for example!
+  mouse = 'a',
+  mousemoveevent = true,
+  -- If a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+  writebackup = false,
+  -- The font used in graphical neovim applications
+  guifont = 'monospace:h17',
+  -- Print active filename in window titlebar
+  title = true,
+  titlestring = [[%F %h%m%r%w NVIM]],
+  -- Virtual edit
+  virtualedit = 'block',
+  -- Configure how new splits should be opened
+  splitright = true,
+  splitbelow = true,
 
--- Don't show the mode, since it's already in the status line
-vim.o.showmode = false
+  -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+  -- instead raise a dialog asking if you wish to save the current file(s)
+  -- See `:help 'confirm'`
+  confirm = true,
+
+  -- [[ Timers ]]
+
+  -- Faster completion (4000ms default)
+  updatetime = 250,
+  -- Time to wait for a mapped sequence to complete (in ms). Displays which-key popup sooner
+  timeoutlen = 800,
+
+  -- [[ Board UI ]]
+
+  -- Set term gui colors (most terminals support this)
+  termguicolors = true,
+  -- Make line numbers default
+  number = true,
+  relativenumber = false,
+  -- Set number column width to 3 {default 4}
+  numberwidth = 3,
+  -- Always show the sign column, otherwise it would shift the text each time
+  signcolumn = 'yes',
+  -- Don't show the mode, since it's already in the status line
+  showmode = false,
+  -- Highlight the current line
+  cursorline = true,
+  -- So that `` is visible in markdown files
+  conceallevel = 0,
+  -- Space in the neovim command line for displaying messages
+  -- cmdheight = 0,
+  -- Always show tabs
+  showtabline = 2,
+  -- Pop up menu height
+  -- pumheight = 10,
+  -- ??
+  -- sidescrolloff = 8,
+  -- Minimal number of screen lines to keep above and below the cursor.
+  scrolloff = 10,
+
+  -- [[ Indentation & wrapping ]]
+
+  -- Enable break indent
+  breakindent = true,
+  -- Display lines as one long line if false
+  wrap = true,
+  -- Word wrapping
+  linebreak = true,
+  showbreak = '↪ ',
+  -- Convert tabs to spaces
+  expandtab = true,
+  -- The number of spaces inserted for each indentation
+  shiftwidth = 4,
+  -- Insert 4 spaces for a tab
+  tabstop = 4,
+  -- Insert 4 spaces for a tab
+  softtabstop = 4,
+
+  -- [[ Search and Replace ]]
+
+  -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+  ignorecase = true,
+  smartcase = true,
+  -- Make indenting smarter again, but prefer treesitter indent on
+  smartindent = false,
+  -- Preview substitutions live, as you type!
+  inccommand = 'split',
+  -- Highlight all matches on previous search pattern
+  hlsearch = true,
+  incsearch = true,
+}
+
+-- [[ Activate these options ]]
+for k, v in pairs(options) do
+  vim.o[k] = v
+end
+----------------------------------------------------------------
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -22,29 +114,6 @@ vim.o.showmode = false
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
-
--- Decrease update time
-vim.o.updatetime = 250
-
--- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
-
--- Configure how new splits should be opened
-vim.o.splitright = true
-vim.o.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -56,19 +125,4 @@ vim.o.splitbelow = true
 --   and `:help lua-options-guide`
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
-
--- Show which line your cursor is on
-vim.o.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
-
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
--- See `:help 'confirm'`
-vim.o.confirm = true
-
 -- vim: ts=2 sts=2 sw=2 et
