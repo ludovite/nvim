@@ -28,8 +28,27 @@ end, 'Save file if needed')
 -- }}}1
 
 -- [[ ==== Navigation ===================================== ]] {{{1
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'")
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'")
+-- Vertical cursor movement, even in wrapped lines
+map('n', 'j', function()
+  return vim.v.count > 0 and 'j' or 'gj'
+end, '', { expr = true })
+map('n', 'k', function()
+  return vim.v.count > 0 and 'k' or 'gk'
+end, '', { expr = true })
+
+-- Extend gg, 0, $ and G commands to wrapped lines
+map('n', 'gg', function()
+  return vim.wo.wrap and 'gg$g0' or 'gg0'
+end, 'First line', { expr = true })
+map('n', 'G', function()
+  return vim.wo.wrap and 'G$g0' or 'G0'
+end, '', { expr = true })
+map('n', '0', function()
+  return vim.wo.wrap and 'g0' or '0'
+end, '', { expr = true })
+map('n', '$', function()
+  return vim.wo.wrap and 'g$' or '$'
+end, '', { expr = true })
 -- }}}1
 
 -- [[ ==== Highlights ===================================== ]] {{{1
@@ -82,6 +101,9 @@ map('t', '<Esc><Esc>', '<C-\\><C-n>', 'Exit terminal mode')
 
 -- [[ ==== Misc =========================================== ]] {{{1
 map('n', 'J', 'mzJ`z', 'Join multiple lines')
+
+-- Don’t copy single letter deletes
+map('n', 'x', '"_x')
 -- }}}1
 
 -- [[ ==== ================================================ ]] {{{1
