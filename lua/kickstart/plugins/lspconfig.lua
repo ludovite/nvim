@@ -207,6 +207,22 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
+      -- For server not managed by lspconfig nor Mason
+      local lspconfig = require 'lspconfig'
+      local configs = require 'lspconfig.configs'
+
+      configs.dbt = {
+        default_config = {
+          cmd = { 'dbt-language-server' },
+          filetypes = { 'sql', 'yml', 'yaml' },
+          root_dir = lspconfig.util.root_pattern 'dbt_project.yml',
+          settings = {},
+        },
+      }
+      lspconfig.dbt.setup {}
+      -- -----
+
       local servers = {
         -- clangd = {},
         -- gopls = {},
@@ -235,12 +251,6 @@ return {
             },
           },
         },
-
-        dbt = {
-          cmd = { 'dbt-language-server' },
-          filetypes = { 'sql', 'yaml' },
-          root_dir = require('lspconfig').util.root_pattern 'dbt_project.yml',
-        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -257,6 +267,7 @@ return {
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
