@@ -235,6 +235,12 @@ return {
             },
           },
         },
+
+        dbt = {
+          cmd = { 'dbt-language-server' },
+          filetypes = { 'sql', 'yaml' },
+          root_dir = require('lspconfig').util.root_pattern 'dbt_project.yml',
+        },
       }
 
       -- Ensure the servers and tools above are installed
