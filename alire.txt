@@ -1,0 +1,4 @@
+https://github.com/folke/trouble.nvim
+https://github.com/hedyhli/outline.nvim
+https://lyz-code.github.io/blue-book/vim_plugin_development/
+
